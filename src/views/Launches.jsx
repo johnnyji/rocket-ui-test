@@ -10,7 +10,14 @@ class LaunchesView extends Component {
   }
 
   handleOnToggleLaunch = (id) => {
-    toggleLaunch({dispatch: this.props.dispatch, launchId: id});
+    let launchId = id;
+
+    //Close the current launch if it has already been toggled to show
+    if (this.props.launchCollection.currentLaunch === id) {
+      launchId = -1;
+    }
+    
+    toggleLaunch({dispatch: this.props.dispatch, launchId });
   };
 
   getContent = () => {
