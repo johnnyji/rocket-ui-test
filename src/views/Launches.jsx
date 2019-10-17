@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ConnectedView from './ConnectedView';
-import {fetchLaunchesIfNeeded} from "../actions/Launches";
+import {fetchLaunchesIfNeeded, toggleLaunch} from "../actions/Launches";
 import Launch from '../components/Launch';
 
 class LaunchesView extends Component {
@@ -9,7 +9,11 @@ class LaunchesView extends Component {
     fetchLaunchesIfNeeded({ dispatch, launchesCollection });
   }
 
-  getContent() {
+  handleOnToggleLaunch = (id) => {
+    toggleLaunch({dispatch: this.props.dispatch, launchId: id});
+  };
+
+  getContent = () => {
     const { launchCollection } = this.props;
 
     if (!launchCollection || launchCollection.fetching) {
@@ -20,21 +24,16 @@ class LaunchesView extends Component {
       return <div> NO DATA </div>;
     }
 
-    let launches = [];
-
-    for (let i = 0; i < launchCollection.launches.length; i++) {
-      const launch = launchCollection.launches[i];
-
-      launches.push(
-        <Launch {...{
-          key: launch.launch_id,
-          launch
-        }} />
-
-      )
-    }
-
-    return <ul>{launches}</ul>;
+    return <ul>
+      {launchCollection.launches.map((launch) => (
+        <Launch 
+          key={launch.flight_number}
+          launch={launch}
+          show={launch.flight_number === launchCollection.currentLaunch}
+          onToggleLaunch={this.handleOnToggleLaunch}
+        />
+      ))}
+    </ul>
   }
 
   render() {

@@ -2,6 +2,7 @@ import { ACTIONS } from '../actions/Launches';
 
 const initialState = {
   launches: [],
+  currentLaunch: -1,
   fetching: false
 };
 
@@ -14,6 +15,10 @@ const actionHandlers = {
     ...state,
     fetching: false,
     launches: [...state.launches, ...action.payload.launches]
+  }),
+  [ACTIONS.TOGGLE_LAUNCH]: ({ state, action }) => ({
+    ...state,
+    currentLaunch: action.payload.launchId
   })
 };
 

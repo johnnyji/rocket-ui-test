@@ -2,7 +2,8 @@ import LaunchService from '../services/LaunchService';
 
 export const ACTIONS = {
   REQUEST_LAUNCHES: 'REQUEST_LAUNCHES',
-  RECEIVE_LAUNCHES: 'RECEIVE_LAUNCHES'
+  RECEIVE_LAUNCHES: 'RECEIVE_LAUNCHES',
+  TOGGLE_LAUNCH: 'TOGGLE_LAUNCH'
 };
 
 export const requestLaunches = () => ({
@@ -25,3 +26,15 @@ const shouldFetchLaunches = launchCollection => !launchCollection || !launchColl
 
 export const fetchLaunchesIfNeeded = ({ dispatch, launchCollection }) =>
   shouldFetchLaunches(launchCollection) && fetchLaunches(dispatch);
+
+
+
+export const toggleLaunch = ({ dispatch, launchId }) => {
+  const toggleLaunchAction = {
+    type: ACTIONS.TOGGLE_LAUNCH,
+    payload: {
+      launchId
+    }
+  };
+  dispatch(toggleLaunchAction);
+};
