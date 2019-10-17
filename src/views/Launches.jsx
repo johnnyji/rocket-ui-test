@@ -9,6 +9,7 @@ class LaunchesView extends Component {
     fetchLaunchesIfNeeded({ dispatch, launchesCollection });
   }
 
+  //dispatches the id of the launch that needs to be expanded
   handleOnToggleLaunch = (id) => {
     let launchId = id;
 
@@ -31,6 +32,7 @@ class LaunchesView extends Component {
       return <div> NO DATA </div>;
     }
 
+    //Returns a list of li elements containing each Launch
     return <ul>
       {launchCollection.launches.map((launch) => (
         <li key={launch.flight_number}>

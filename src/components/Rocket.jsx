@@ -5,6 +5,7 @@ class Rocket extends Component {
   constructor(props) {
     super(props);
 
+    //Initialize state with empty values
     this.state = {
       rocket: {
         id: "",

@@ -5,11 +5,13 @@ class Launch extends Component {
   constructor(props) {
     super(props);
 
+    //Initialize state with empty rocket for caching
     this.state = {
       rocket: {}
     }
   }
 
+  //Cache the rocket upon fetching: callback called from Rocket component upon mounting
   handleUpdateLaunchRocket = (rocket) => this.setState({ rocket });
 
   renderContent = () => {
@@ -30,6 +32,7 @@ class Launch extends Component {
   render() {
     const { flight_number: number, mission_name: name } = this.props.launch;
     
+    //Only render launch content, including Rocket, if show is true
     return (
       <div onClick={() => this.props.onToggleLaunch(number)}>
         <h2> { name } </h2>
