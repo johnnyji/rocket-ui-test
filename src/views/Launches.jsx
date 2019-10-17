@@ -33,12 +33,13 @@ class LaunchesView extends Component {
 
     return <ul>
       {launchCollection.launches.map((launch) => (
-        <Launch 
-          key={launch.flight_number}
-          launch={launch}
-          show={launch.flight_number === launchCollection.currentLaunch}
-          onToggleLaunch={this.handleOnToggleLaunch}
-        />
+        <li key={launch.flight_number}>
+          <Launch 
+            launch={launch}
+            show={launch.flight_number === launchCollection.currentLaunch}
+            onToggleLaunch={this.handleOnToggleLaunch}
+          />
+        </li>
       ))}
     </ul>
   }
