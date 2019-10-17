@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Rocket from "./Rocket";
+import RocketService from "../services/RocketService";
 
 class Launch extends Component {
   constructor(props) {
@@ -7,14 +8,10 @@ class Launch extends Component {
 
     this.state = {
       rocket: {}
-    };
+    }
   }
 
-  
-
-  handleOnGetRocketInfo = () => {
-    
-  }
+  handleUpdateLaunchRocket = (rocket) => this.setState({ rocket });
 
   renderContent = () => {
     const { flight_number: number, details, rocket } = this.props.launch;
@@ -23,7 +20,11 @@ class Launch extends Component {
       <div className="launch-content">
         <div> Flight Number: { number } </div>
         <div>Launch details: {details}</div>
-        <Rocket rocket={this.state.rocket} />
+        <Rocket
+          rocketId={rocket.rocket_id}
+          rocket={this.state.rocket}
+          onUpdateLaunchRocket={this.handleUpdateLaunchRocket}
+        />
       </div>
     );
   }
