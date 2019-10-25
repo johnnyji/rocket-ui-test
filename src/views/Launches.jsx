@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import ConnectedView from './ConnectedView';
 import {fetchLaunchesIfNeeded} from "../actions/Launches";
+import {fetchIfNeeded} from '../actions/Rockets';
 import Launch from '../components/Launch';
 
 class LaunchesView extends Component {
   componentDidMount() {
-    const { dispatch, launchesCollection } = this.props;
+    const { dispatch, launchesCollection, rockets } = this.props;
     fetchLaunchesIfNeeded({ dispatch, launchesCollection });
+    fetchIfNeeded({dispatch, rockets});
   }
 
   getContent() {
-    const { launchCollection } = this.props;
+    const { launchCollection, rockets } = this.props;
 
     if (!launchCollection || launchCollection.fetching) {
       return <div> LOADING </div>;
@@ -20,18 +22,20 @@ class LaunchesView extends Component {
       return <div> NO DATA </div>;
     }
 
-    let launches = [];
+    const launches = [];
 
-    for (let i = 0; i < launchCollection.launches.length; i++) {
+    for (let i = 0; i < launchCollection.launches.length; i += 1) {
       const launch = launchCollection.launches[i];
-
       launches.push(
-        <Launch {...{
-          key: launch.launch_id,
-          launch
-        }} />
+        <Launch
+          key={`${launch.flight_number}-${launch.launch_date_unix}`}
+          {...{
 
-      )
+          launch,
+          rockets
+        }} />
+      );
+
     }
 
     return <ul>{launches}</ul>;
