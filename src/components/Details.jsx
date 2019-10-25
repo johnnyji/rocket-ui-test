@@ -6,8 +6,9 @@ const Details = (props) => {
   return (
     <div>
       {rocketId}
-      <p>{details}</p>
-      <p>{rocket.description}</p>
+      <p><label>Cost/Launch:</label>{rocket.costPerLaunch}</p>
+      <p><label>Launch Details:</label>{details}</p>
+      <p><label>Rocket Description:</label>{rocket.description}</p>
     </div>
   );
 };
