@@ -13,7 +13,7 @@ const actionHandlers = {
   [ACTIONS.RECEIVE_LAUNCHES]: ({ state, action }) => ({
     ...state,
     fetching: false,
-    launches: [...state.launches, ...action.payload.launches]
+    launches: [...action.payload.launches]
   })
 };
 

@@ -1,18 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-class Launch extends Component {
+const Launch = (props) => {
+  const {
+    launch,
+    children,
+    linkTo
+  } = props;
 
-  render() {
-
-    let launch = this.props.launch;
-
-    return (
-      <li>
+  return (
+    <li>
+      <Link to={linkTo}>
         <h2> { launch.mission_name } </h2>
-        <div> Flight Number: { launch.flight_number } </div>
-      </li>
-    );
-  }
+      </Link>
+      <div> Flight Number: { launch.flight_number } </div>
+      { children }
+    </li>
+  );
 }
 
 export default Launch;
