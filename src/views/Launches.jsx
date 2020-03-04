@@ -29,7 +29,7 @@ class LaunchesView extends Component {
       return <div> NO DATA </div>;
     }
 
-    let launches = [];
+    const launches = [];
 
     for (let i = 0; i < launchCollection.launches.length; i++) {
       const launch = launchCollection.launches[i];
@@ -46,7 +46,7 @@ class LaunchesView extends Component {
         props.children = <Rocket rocketId={launch.rocket.rocket_id} />;
         props.linkTo = '/';
       }
-  
+
       launches.push(<Launch {...props} />);
     }
 
