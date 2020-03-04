@@ -1,66 +1,65 @@
-import React, { Component } from 'react';
-import ConnectedView from './ConnectedView';
-import {fetchLaunchesIfNeeded} from "../actions/Launches";
+import React from 'react';
 import Launch from '../components/Launch';
 import Rocket from './Rocket';
+import { useLaunchCollection } from '../hooks/hooks';
 
-class LaunchesView extends Component {
-  componentDidMount() {
-    const { dispatch, launchesCollection } = this.props;
-    fetchLaunchesIfNeeded({ dispatch, launchesCollection });
-  }
-
-  getContent() {
-    const {
-      launchCollection,
-      match: {
-        params: {
-          flightNumber = '',
-          siteId = '',
-        }
+const LaunchesView = (props) => {
+  const {
+    match: {
+      params: {
+        flightNumber = '',
+        siteId = '',
       }
-    } = this.props;
-
-    if (!launchCollection || launchCollection.fetching) {
-      return <div> LOADING </div>;
     }
+  } = props;
+  const launchCollection = useLaunchCollection();
 
-    if (!launchCollection.launches.length) {
-      return <div> NO DATA </div>;
-    }
+  if (!launchCollection || launchCollection.fetching) {
+    return <div> LOADING </div>;
+  }
 
-    const launches = [];
+  if (!launchCollection.launches.length) {
+    return <div> NO DATA </div>;
+  }
 
-    for (let i = 0; i < launchCollection.launches.length; i++) {
-      const launch = launchCollection.launches[i];
-      const key = `${launch.flight_number}-${launch.launch_site.site_id}`;
-      // in order to avoid computing URLs in the child based on the presence of
-      // the children prop, go ahead and be explicit about the linkTo property
-      const props = {
-        key,
-        launch,
-        linkTo: `/launches/${launch.flight_number}/${launch.launch_site.site_id}`,
-      };
-      if (launch.flight_number.toString() === flightNumber &&
-        launch.launch_site.site_id === siteId) {
-        props.children = <Rocket rocketId={launch.rocket.rocket_id} />;
-        props.linkTo = '/';
+  return (
+    <ul>
+      {
+        launchCollection.launches.map((launch) => {
+          // use flight_number and launch_site to create a unique key for the UI
+          // this is useful for the key in the list of components AND to create
+          // an exclusive relationship from the router props
+          const selected = launch.flight_number.toString() === flightNumber &&
+            launch.launch_site.site_id === siteId;
+          const key = `${launch.flight_number}-${launch.launch_site.site_id}`;
+          const expandLink = `/launches/${launch.flight_number}/${launch.launch_site.site_id}`;
+          return (
+            <Launch
+              launch={launch}
+              key={key}
+              linkTo={selected ? '/' : expandLink}
+            >
+              {
+                // when the item is selected, give it a rocket child
+                selected ? <Rocket rocketId={launch.rocket.rocket_id} /> : null
+              }
+            </Launch>
+          );
+
+        })
       }
-
-      launches.push(<Launch {...props} />);
-    }
-
-    return <ul>{launches}</ul>;
-  }
-
-  render() {
-    return (
-      <div>
-        <h2> SpaceX launches </h2>
-        {this.getContent()}
-      </div>
-    );
-  }
+    </ul>
+  );
 }
 
-export default ConnectedView(LaunchesView, 'launches');
+const LaunchesWrapper = (props) => {
+  const { children, ...remainingProps } = props;
+  return (
+    <div>
+      <h2> SpaceX launches </h2>
+      <LaunchesView {...remainingProps} />
+    </div>
+  );
+};
+
+export default LaunchesWrapper;

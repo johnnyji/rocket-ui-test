@@ -1,16 +1,16 @@
 import React from 'react';
+import Navigation from '../components/Navigation';
 
 const Layout = (props) => {
   const {
     pageName,
-    menu,
     children
   } = props;
 
   return (
     <main className={`${pageName} layout`}>
       <nav>
-        { menu }
+        <Navigation />
       </nav>
 
       <section>

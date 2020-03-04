@@ -1,26 +1,6 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchRocketById } from "../actions/Rockets";
+import React from 'react';
 import Rocket from '../components/Rocket';
-
-/**
- * React hook that returns the rocketCollection record associated with the rocketId.
- * If the record does not exist, it will be fetched.
- * @param {string} rocketId
- */
-const useRocketById = (rocketId) => {
-  const dispatch = useDispatch();
-  const rocketCollection = useSelector(state => state.rocketCollection);
-  const selectedRecord = rocketCollection[rocketId];
-
-  useEffect(() => {
-    if (!selectedRecord) {
-      fetchRocketById(dispatch, { rocketId });
-    }
-  }, [dispatch, selectedRecord, rocketId]);
-
-  return selectedRecord;
-};
+import { useRocketById } from '../hooks/hooks';
 
 const RocketView = (props) => {
   const {

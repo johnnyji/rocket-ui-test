@@ -5,6 +5,7 @@ import {
   Switch
 } from 'react-router-dom';
 import Launches from './views/Launches';
+import Layout from './views/Layout';
 
 /**
  * Routers can be complex, so here is a good place to elaborate on what we're trying
@@ -21,11 +22,13 @@ import Launches from './views/Launches';
 const Routes = () => (
   <Router>
     <div>
-      <Switch>
-        <Route exact path="/" component={Launches}/>
-        <Route path="/launches/:flightNumber/:siteId" component={Launches}/>
-        <Route component={Launches} />
-      </Switch>
+      <Layout>
+        <Switch>
+          <Route exact path="/" component={Launches}/>
+          <Route path="/launches/:flightNumber/:siteId" component={Launches}/>
+          <Route component={Launches} />
+        </Switch>
+      </Layout>
     </div>
   </Router>
 );
