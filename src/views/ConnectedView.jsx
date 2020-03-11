@@ -25,6 +25,7 @@ function MasterLayoutHOC(WrappedComponent, pageName) {
 
   const mapStateToProps = state => state;
 
+  //normally we bind actions to dispatch here
   const mapDispatchToProps = dispatch => ({
     dispatch
   });

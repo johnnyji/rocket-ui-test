@@ -13,7 +13,8 @@ const DashboardPlugin = require('webpack-dashboard/plugin');
 const HOST = process.env.HOST || "127.0.0.1";
 const PORT = process.env.PORT || "7357";
 
-
+//XXX: rebuilds are extremely slow and output in the browser console reall noisy.
+//Needs to be fixed
 module.exports = {
   entry: [
     // POLYFILL: Set up an ES6-ish environment
@@ -30,6 +31,9 @@ module.exports = {
     publicPath: '/',
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js'
+  },
+  optimization: {
+      minimize: process.env.NODE_ENV === "production"
   },
   module: {
     rules: [
@@ -114,5 +118,10 @@ module.exports = {
         js: [ "bundle.js"],
       }
     }),
+    new webpack.DefinePlugin({
+        "process.env": {
+            "NODE_ENV": JSON.stringify(process.env.NODE_ENV)
+        }
+    })
   ]
 };

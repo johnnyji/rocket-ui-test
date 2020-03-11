@@ -16,12 +16,7 @@ const receiveLaunches = response => ({
   }
 });
 
-export const fetchLaunches = dispatch => {
+export const fetchLaunches = () => (dispatch) => {
   dispatch(requestLaunches());
   return LaunchService.get().then(response => dispatch(receiveLaunches(response)));
 };
-
-const shouldFetchLaunches = launchCollection => !launchCollection || !launchCollection.fetching;
-
-export const fetchLaunchesIfNeeded = ({ dispatch, launchCollection }) =>
-  shouldFetchLaunches(launchCollection) && fetchLaunches(dispatch);

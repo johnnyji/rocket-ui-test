@@ -5,7 +5,7 @@
   "main": "''",
   "scripts": {
     "build": "webpack --config webpack.production.config.js --progress --profile --colors",
-    "start": "webpack-dev-server --progress --profile --colors",
+    "start": "NODE_EVN=dev NODE_PATH=src webpack-dev-server --progress --profile --colors",
     "lint": "eslint --ext js --ext jsx src || exit 0",
     "dev": " webpack-dashboard -- webpack-dev-server --mode development",
     "test": "export NODE_ENV=test && jest",
@@ -21,6 +21,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-polyfill": "6.26.0",
+    "classnames": "^2.2.6",
     "normalize.css": "^7.0.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
@@ -28,7 +29,8 @@
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.2",
     "react-router-redux": "^4.0.8",
-    "redux": "^4.0.4"
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0"
   },
   "babel": {
     "presets": [
@@ -50,13 +52,13 @@
     "css-loader": "^0.28.7",
     "enzyme": "^3.2.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "eslint": "4.19.1",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-jest": "^21.5.0",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-react": "7.11.1",
-    "eslint-plugin-import": "2.14.0",
     "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-jest": "^21.5.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "7.11.1",
     "file-loader": "1.1.11",
     "html-loader": "0.4.5",
     "html-webpack-plugin": "3.2.0",
